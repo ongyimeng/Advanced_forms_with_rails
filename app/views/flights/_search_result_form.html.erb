@@ -1,0 +1,21 @@
+<%= form_with url: "/bookings/new", method: :get do |form|%>
+    <% if params[:start_datetime] != nil %>
+        <% @formatted_startdatetime= Date.parse(params[:start_datetime]) %>
+        <% @search_results=Flight.where(start_airport_id: params[:start_airport_id], finish_airport_id: params[:finish_airport_id], start_datetime: @formatted_startdatetime.all_day ) %>
+        <% if @search_results%>
+
+            <% @search_results.each do |flight| %>
+                <div>
+                    <p>
+                    <%= radio_button_tag(:result_flight_id, flight.id, required: true) %>
+                    <%= flight.from_airport.code %>
+                    <%= flight.to_airport.code %>
+                    <%= flight.start_datetime %>
+                    <p>
+                </div>
+            <%end%>
+            <%= hidden_field_tag :pax, params[:pax] %>
+            <%= form.submit 'Next' %>
+        <%end%>
+    <%end%>
+<%end%>

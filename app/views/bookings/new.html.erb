@@ -1,0 +1,21 @@
+<%= form_with model:@booking do |form| %>
+    <%= form.hidden_field :flight_id, value: params[:result_flight_id] %>
+    <div>
+        <p>
+        <%= @result_flight_id %>
+        <%= @result_flight.start_datetime %>
+        <%= @result_flight.from_airport.code %>
+        <%= @result_flight.to_airport.code %>
+        <p>
+    </div>
+    
+    <%= form.fields_for :passengers do |passengers_form| %>
+        <%= passengers_form.label :name, "Name" %>
+        <%= passengers_form.text_field :name %>
+        <%= passengers_form.label :email, "Email" %>
+        <%= passengers_form.text_field :email %>
+    <%end%>
+    
+    
+    <%= form.submit "Submit"%>
+<%end%>
